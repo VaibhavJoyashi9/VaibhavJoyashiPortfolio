@@ -147,6 +147,6 @@ obj.post("/sendEmail", async (req, res) => {
         });
     }
 });
-obj.listen(PORT,()=>{
+obj.listen(process.env.PORT,()=>{
     console.log("running")
 })

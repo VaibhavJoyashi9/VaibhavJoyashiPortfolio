@@ -123,7 +123,7 @@ html
 }
 
 .headtitle {
-    padding-top: 70px;
+    padding-top: 30px;
 }
 
 .headpara {
@@ -189,7 +189,7 @@ html
     position: relative;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-    margin-top: 70px;
+    margin-top: 30px;
     background: #0a0a0a;
 }
 
@@ -2266,4 +2266,12 @@ html, body {
 
 img, svg {
     max-width: 100%;
+}
+
+.Social
+{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
 }

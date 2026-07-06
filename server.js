@@ -17,18 +17,22 @@ obj.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname,"views","Home.html"))
 })
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
+});
+
+
 obj.post("/sendEmail", async (req, res) => {
      console.log("Route Hit");
     try {
         const { name, email, msg } = req.body;
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-
         const html = `
         <!DOCTYPE html>
         <html>

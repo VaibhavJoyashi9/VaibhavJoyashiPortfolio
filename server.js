@@ -13,7 +13,7 @@ obj.use(express.static("static"));
 obj.use(express.json());
 obj.use(express.urlencoded({ extended: true }));
 
-obj.get("/Index",(req,res)=>{
+obj.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname,"views","Home.html"))
 })
 

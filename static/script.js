@@ -52,12 +52,19 @@ const cerPrevBtn = document.getElementById('cerPrevBtn');
 const cerNextBtn = document.getElementById('cerNextBtn');
 
 let cerIndex = 0;
+let cerAutoSlideInterval;
+const cerAutoSlideDelay = 3000;
+
+function getCerVisible() {
+    const cardWidth = cerCards[0].getBoundingClientRect().width;
+    const trackWidth = cerTrack.parentElement.getBoundingClientRect().width;
+    return Math.round(trackWidth / cardWidth);
+}
 
 function updateCerSlider() {
     if (cerTotal === 0) return;
 
     const cardWidth = cerCards[0].getBoundingClientRect().width;
-
     const trackWidth = cerTrack.parentElement.getBoundingClientRect().width;
     const cerVisible = Math.round(trackWidth / cardWidth);
 
@@ -66,9 +73,31 @@ function updateCerSlider() {
 
     cerTrack.style.transform = `translateX(-${cerIndex * (cardWidth + gap)}px)`;
 
-
     cerPrevBtn.disabled = cerIndex === 0;
     cerNextBtn.disabled = cerIndex >= cerTotal - cerVisible;
+}
+
+function cerAutoAdvance() {
+    const cerVisible = getCerVisible();
+
+    if (cerIndex < cerTotal - cerVisible) {
+        cerIndex++;
+    } else {
+        cerIndex = 0;
+    }
+    updateCerSlider();
+}
+
+function startCerAutoSlide() {
+    stopCerAutoSlide();
+    cerAutoSlideInterval = setInterval(cerAutoAdvance, cerAutoSlideDelay);
+}
+
+function stopCerAutoSlide() {
+    if (cerAutoSlideInterval) {
+        clearInterval(cerAutoSlideInterval);
+        cerAutoSlideInterval = null;
+    }
 }
 
 cerPrevBtn.addEventListener('click', () => {
@@ -76,20 +105,30 @@ cerPrevBtn.addEventListener('click', () => {
         cerIndex--;
         updateCerSlider();
     }
+    startCerAutoSlide();
 });
 
 cerNextBtn.addEventListener('click', () => {
-    const cardWidth = cerCards[0].getBoundingClientRect().width;
-    const trackWidth = cerTrack.parentElement.getBoundingClientRect().width;
-    const cerVisible = Math.round(trackWidth / cardWidth);
+    const cerVisible = getCerVisible();
 
     if (cerIndex < cerTotal - cerVisible) {
         cerIndex++;
         updateCerSlider();
     }
+    startCerAutoSlide();
 });
+
+const cerSliderWrapper = cerTrack.parentElement;
+cerSliderWrapper.addEventListener('mouseenter', stopCerAutoSlide);
+cerSliderWrapper.addEventListener('mouseleave', startCerAutoSlide);
+cerSliderWrapper.addEventListener('touchstart', stopCerAutoSlide, { passive: true });
+cerSliderWrapper.addEventListener('touchend', () => {
+    setTimeout(startCerAutoSlide, 1000);
+}, { passive: true });
+
 window.addEventListener('resize', updateCerSlider);
 updateCerSlider();
+startCerAutoSlide();
 
 
 // FAQ

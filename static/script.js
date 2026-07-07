@@ -143,6 +143,10 @@ const sendMsg = document.getElementById("SendMsgToUser").addEventListener("click
                     document.getElementById("name").value = "";
                     document.getElementById("email").value = "";
                     document.getElementById("msg").value = "";
+
+                    document.getElementById("name").style = "border:1px solid #9CA3AF";
+                    document.getElementById("email").style = "border:1px solid #9CA3AF";
+                    document.getElementById("msg").style = "border:1px solid #9CA3AF";
                 }
             },
             error: function (err) {
@@ -152,6 +156,9 @@ const sendMsg = document.getElementById("SendMsgToUser").addEventListener("click
                 setTimeout(() => {
                     document.getElementById("OverlyScreen").classList.remove("active");
                 }, 2000);
+                document.getElementById("name").style = "border:1px solid #9CA3AF";
+                document.getElementById("email").style = "border:1px solid #9CA3AF";
+                document.getElementById("msg").style = "border:1px solid #9CA3AF";
             }
         });
     }

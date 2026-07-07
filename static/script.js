@@ -108,22 +108,53 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 // send maila ajax
 const sendMsg = document.getElementById("SendMsgToUser").addEventListener("click", (e) => {
     e.preventDefault();
-    const Name=document.getElementById("name").value;
-    const Email=document.getElementById("email").value;
-    const Message=document.getElementById("msg").value;
+    const Name = document.getElementById("name").value;
+    const Email = document.getElementById("email").value;
+    const Message = document.getElementById("msg").value;
 
-    $.ajax({
-        type: "POST",
-        url: "/sendEmail",
-        data: { name:Name,email:Email,msg:Message},
-        success: function (data) {
-            if (data.success) {
-            alert("Your MSG Send Successfully...!");
-        }
-        },
-        error: function (err) {
-           alert("MSG Not Send...!");
-        }
-    });
+    let name = false;
+    let email = false;
+    let msg = false;
+    if (Name == "") {
+        name = true;
+        document.getElementById("name").style = "border:1px solid red";
+    }
+    if (Email == "") {
+        email = true;
+        document.getElementById("email").style = "border:1px solid red";
+    }
+    if (Message == "") {
+        msg = true;
+        document.getElementById("msg").style = "border:1px solid red";
+    }
+    if (name == false || email == false || msg == false) {
+        $.ajax({
+            type: "POST",
+            url: "/sendEmail",
+            data: { name: Name, email: Email, msg: Message },
+            success: function (data) {
+                if (data.success) {
+                    document.getElementById("AlertMsgEmailImg").src = "success.png";
+                    document.getElementById("AlertMsgEmail").innerText = "Message delivered successfully!";
+                    document.getElementById("OverlyScreen").classList.add("active");
+                    setTimeout(() => {
+                        document.getElementById("OverlyScreen").classList.remove("active");
+                    }, 2000);
+                    document.getElementById("name").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("msg").value = "";
+                }
+            },
+            error: function (err) {
+                document.getElementById("AlertMsgEmailImg").src = "fail.png";
+                document.getElementById("AlertMsgEmail").innerText = "Message delivery failed.";
+                document.getElementById("OverlyScreen").classList.add("active");
+                setTimeout(() => {
+                    document.getElementById("OverlyScreen").classList.remove("active");
+                }, 2000);
+            }
+        });
+    }
+
 })
 

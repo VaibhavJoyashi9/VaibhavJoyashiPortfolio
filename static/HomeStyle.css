@@ -2275,3 +2275,49 @@ img, svg {
     gap: 30px;
     margin-top: 20px;
 }
+
+/* overly */
+.Overly
+{
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(25, 25, 32, 0.7); 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.Overly.active {
+    display: flex;
+    opacity: 1;
+}
+.AlertBox {
+    height: auto;
+    min-height: 200px;
+    width: min(90%, 400px);
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.ALertMsg {
+    text-align: center;
+    font-family: var(--font);
+    color: var(--para);
+    font-size: clamp(18px, 4vw, 28px);
+}
+.imgTag
+{
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
